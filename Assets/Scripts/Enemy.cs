@@ -16,9 +16,23 @@ public class Enemy : MonoBehaviour
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
         if (transform.position.y < -6f){
-            float randomX = Random.Range(-8f, 8f);
-            transform.position = new Vector3(randomX, 6, 0);
+            randomPos();
         }
-
+    }
+    private void OnTriggerEnter(Collider other){
+        if (other.tag == "Player"){
+            Destroy(this.gameObject);
+            Player player = other.transform.GetComponent<Player>();
+            if (player != null ? true : false) player.Damage();
+        }
+        if (other.tag == "Laser"){
+            Destroy(this.gameObject);
+            Destroy(other.gameObject);
+        }
+    }
+    
+    void randomPos(){
+        float randomX = Random.Range(-8f, 8f);
+        transform.position = new Vector3(randomX, 6, 0);
     }
 }
