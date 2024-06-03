@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        transform.position = new Vector3(0, 6, 0);
+        randomPos();
     }
 
     void Update()
@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
             randomPos();
         }
     }
-    private void OnTriggerEnter(Collider other){
+    private void OnTriggerEnter2D(Collider2D other){ // or OnTriggerEnter for 3D, Collider for 3D
         if (other.tag == "Player"){
             Destroy(this.gameObject);
             Player player = other.transform.GetComponent<Player>();
@@ -33,6 +33,6 @@ public class Enemy : MonoBehaviour
     
     void randomPos(){
         float randomX = Random.Range(-8f, 8f);
-        transform.position = new Vector3(randomX, 6, 0);
+        transform.position = new Vector3(randomX, 7, 0);
     }
 }

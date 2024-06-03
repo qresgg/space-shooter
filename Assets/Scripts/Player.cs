@@ -6,18 +6,27 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 3.5f;
+
     [SerializeField]
     private GameObject _laserPrefab;
+    [SerializeField]
+    private GameObject _tripleShotPrefab;
+
     [SerializeField]
     private float _fireRate = 0.5f;
     private float _nextFire = 0.0f; // or -1f
     [SerializeField]
     private int _lives = 3;
+    private SpawnManager _spawnManager;
+    [SerializeField]
+    private bool _isTripleShotActive = false;
+
 
     // Start is called before the first frame update
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
     }
 
     // Update is called once per frame
@@ -53,13 +62,27 @@ public class Player : MonoBehaviour
         _nextFire = Time.time + _fireRate;
         Vector3 direction = new Vector3(transform.position.x, transform.position.y + 0.8f, 0);
         // transform.position + new Vector3(0, 0.8f, 0)
-        Instantiate(_laserPrefab, direction, Quaternion.identity);
+        
+        if (_isTripleShotActive == true)
+        {
+            Vector3 TripleShotActive = new Vector3(transform.position.x, transform.position.y + 0.2f, 0);
+            Instantiate(_tripleShotPrefab, TripleShotActive, Quaternion.identity);   
+        }
+        else
+        {
+            Vector3 TripleShotActiveDeactivate = new Vector3(transform.position.x, transform.position.y + 0.8f, 0);
+            Instantiate(_laserPrefab, TripleShotActiveDeactivate, Quaternion.identity);
+        }
     }
     
     public void Damage()
     {
         _lives--;
 
-        if (_lives == 0 ? true : false) Destroy(this.gameObject);
+        if (_lives == 0) 
+        {
+            _spawnManager.PlayerDeath();
+            Destroy(this.gameObject);
+        }
     }
 }
