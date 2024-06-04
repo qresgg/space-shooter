@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
         Vector3 direction = new Vector3(transform.position.x, transform.position.y + 0.8f, 0);
         // transform.position + new Vector3(0, 0.8f, 0)
         
-        if (_isTripleShotActive == true)
+        if (_isTripleShotActive)
         {
             Vector3 TripleShotActive = new Vector3(transform.position.x, transform.position.y + 0.2f, 0);
             Instantiate(_tripleShotPrefab, TripleShotActive, Quaternion.identity);   
