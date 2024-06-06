@@ -36,6 +36,7 @@ public class Powerup : MonoBehaviour
                     break;
                 case 2:
                     Destroy(this.gameObject);
+                    _player.ShieldActive();
                     break;
                 default:
                     Debug.Log("Default values");

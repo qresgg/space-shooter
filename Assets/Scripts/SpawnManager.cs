@@ -46,12 +46,11 @@ public class SpawnManager : MonoBehaviour
             float randomX = Random.Range(-8f, 8f);
             Vector3 propToSpawn = new Vector3(randomX, 7, 0);
 
-            int randomPowerup = Random.Range(0, 2);
+            int randomPowerup = Random.Range(0, 3);
             Instantiate(powerups[randomPowerup], propToSpawn, Quaternion.identity);
             yield return new WaitForSeconds(7.0f); 
         }
     }
-
     public void PlayerDeath()
     {
         _isPlayerDeath = true;
