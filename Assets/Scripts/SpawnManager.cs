@@ -9,14 +9,14 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
-    private GameObject _tripleShotPowerUpPrefab;
+    private GameObject[] powerups; // list of powerups
     private bool _isPlayerDeath = false;
 
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(SpawnEnemyRoutine());
-        StartCoroutine(SpawnTripleShotPowerUp());
+        StartCoroutine(SpawnPowerUpRoutine());
     }
 
     // Update is called once per frame
@@ -39,14 +39,15 @@ public class SpawnManager : MonoBehaviour
         }
     }
     
-    IEnumerator SpawnTripleShotPowerUp()
+    IEnumerator SpawnPowerUpRoutine()
     {
         while(!_isPlayerDeath)
         {
             float randomX = Random.Range(-8f, 8f);
             Vector3 propToSpawn = new Vector3(randomX, 7, 0);
 
-            Instantiate(_tripleShotPowerUpPrefab, propToSpawn, Quaternion.identity);
+            int randomPowerup = Random.Range(0, 2);
+            Instantiate(powerups[randomPowerup], propToSpawn, Quaternion.identity);
             yield return new WaitForSeconds(7.0f); 
         }
     }

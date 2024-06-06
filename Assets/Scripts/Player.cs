@@ -15,11 +15,18 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _fireRate = 0.5f;
     private float _nextFire = 0.0f; // or -1f
+
     [SerializeField]
     private int _lives = 3;
     private SpawnManager _spawnManager;
+
     [SerializeField]
     private bool _isTripleShotActive = false;
+    [SerializeField]
+    private bool _isSpeedActive = false;
+
+    [SerializeField]
+    private float _speedMultiplier = 2;
 
 
     // Start is called before the first frame update
@@ -95,5 +102,18 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         _isTripleShotActive = false;
+    }
+
+    public void SpeedActive()
+    {
+        _isSpeedActive = true;
+        _speed *= _speedMultiplier;
+        StartCoroutine(SpeedPowerDownRoutine());
+    }
+    IEnumerator SpeedPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _isSpeedActive = false;
+        _speed /= _speedMultiplier;
     }
 }
