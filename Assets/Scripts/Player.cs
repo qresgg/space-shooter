@@ -4,37 +4,33 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
-    private float _speed = 3.5f;
+    [SerializeField] private float _speed = 3.5f;
 
-    [SerializeField]
-    private GameObject _laserPrefab;
-    [SerializeField]
-    private GameObject _tripleShotPrefab;
+    [SerializeField] private GameObject _laserPrefab;
+    [SerializeField] private GameObject _tripleShotPrefab;
 
-    [SerializeField]
-    private float _fireRate = 0.5f;
+    [SerializeField] private float _fireRate = 0.5f;
     private float _nextFire = 0.0f; // or -1f
 
-    [SerializeField]
-    private int _lives = 3;
+    [SerializeField] private int _lives = 3;
     private SpawnManager _spawnManager;
+    private UIManager _uiManager;
 
     private bool _isTripleShotActive = false;
     private bool _isSpeedActive = false;
     private bool _isShieldActive = false;
 
-    [SerializeField]
-    private float _speedMultiplier = 2;
+    [SerializeField] private float _speedMultiplier = 2;
 
-    [SerializeField]
-    private GameObject _shield;
+    [SerializeField] private GameObject _shield;
+    private int _score = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
     }
 
     // Update is called once per frame
@@ -44,6 +40,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire){
             ShootLaser();
         }
+        _uiManager.updateScore(_score);
     }
 
     void CalculateMovement()
@@ -91,13 +88,17 @@ public class Player : MonoBehaviour
             return;
         }
         _lives--;
+        _uiManager.updateLives(_lives);
         if (_lives == 0) 
         {
             _spawnManager.PlayerDeath();
             Destroy(this.gameObject);
         }
     }
-
+    public void addScore()
+    {
+        _score += 10;
+    }
     public void TripleShotActive()
     {
         _isTripleShotActive = true;

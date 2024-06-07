@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField]
-    private float _speed = 4f;
+    [SerializeField] private float _speed = 4f;
+    private Player _player;
 
     void Start()
     {
         randomPos();
+        _player = GameObject.Find("Player").GetComponent<Player>();
     }
 
     void Update()
@@ -27,6 +28,7 @@ public class Enemy : MonoBehaviour
         }
         if (other.tag == "Laser"){
             Destroy(this.gameObject);
+            _player.addScore();
             Destroy(other.gameObject);
         }
     }
