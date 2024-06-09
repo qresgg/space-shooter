@@ -21,8 +21,9 @@ public class Player : MonoBehaviour
     private bool _isShieldActive = false;
 
     [SerializeField] private float _speedMultiplier = 2;
-
     [SerializeField] private GameObject _shield;
+
+    [SerializeField] private GameObject _leftEngineFire, _rightEngineFire;
     private int _score = 0;
 
     // Start is called before the first frame update
@@ -89,10 +90,18 @@ public class Player : MonoBehaviour
         }
         _lives--;
         _uiManager.updateLives(_lives);
-        if (_lives == 0) 
+        switch (_lives)
         {
-            _spawnManager.PlayerDeath();
-            Destroy(this.gameObject);
+            case 2: 
+                _rightEngineFire.SetActive(true); 
+                break;
+            case 1: 
+                _leftEngineFire.SetActive(true); 
+                break;
+            case 0:
+                _spawnManager.PlayerDeath();
+                Destroy(this.gameObject);
+                break;
         }
     }
     public void addScore()
