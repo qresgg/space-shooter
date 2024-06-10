@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private GameObject _leftEngineFire, _rightEngineFire;
     private int _score = 0;
+    [SerializeField] AudioClip _laserSoundClip;
+    [SerializeField] AudioSource _audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,7 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -42,6 +45,7 @@ public class Player : MonoBehaviour
             ShootLaser();
         }
         _uiManager.updateScore(_score);
+        _audioSource.clip = _laserSoundClip;
     }
 
     void CalculateMovement()
@@ -79,6 +83,7 @@ public class Player : MonoBehaviour
             Vector3 TripleShotActiveDeactivate = new Vector3(transform.position.x, transform.position.y + 0.8f, 0);
             Instantiate(_laserPrefab, TripleShotActiveDeactivate, Quaternion.identity);
         }
+        _audioSource.Play();
     }
     
     public void Damage()

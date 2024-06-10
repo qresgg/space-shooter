@@ -10,6 +10,8 @@ public class Powerup : MonoBehaviour
     private int powerUpID;
     private Player _player;
 
+    [SerializeField] AudioClip _clip;
+
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
@@ -24,6 +26,7 @@ public class Powerup : MonoBehaviour
     {
         if(other.tag == "Player")
         {
+            AudioSource.PlayClipAtPoint(_clip, transform.position);  
             switch (powerUpID)
             {
                 case 0:

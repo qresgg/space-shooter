@@ -8,11 +8,16 @@ public class Enemy : MonoBehaviour
     private Player _player;
     private Animator _anim;
 
+    [SerializeField] AudioClip _explosionSoundClip;
+    [SerializeField] AudioSource _audioSource;
+
     void Start()
     {
         randomPos();
         _player = GameObject.Find("Player").GetComponent<Player>();
         _anim = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.clip = _explosionSoundClip;
     }
 
     void Update()
@@ -24,17 +29,12 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other){ // or OnTriggerEnter for 3D, Collider for 3D
         if (other.tag == "Player"){
-            _anim.SetTrigger("OnEnemyDeath");
-        _speed = 0;
-        Destroy(this.gameObject, 2.8f);
+            EnemyDeath();
             Player player = other.transform.GetComponent<Player>();
             if (player != null) player.Damage();
         }
         if (other.tag == "Laser"){
-            _anim.SetTrigger("OnEnemyDeath");
-            _anim.SetTrigger("OnEnemyDeath");
-        _speed = 0;
-        Destroy(this.gameObject, 2.8f);
+            EnemyDeath();
             _player.addScore();
             Destroy(other.gameObject);
         }
@@ -44,6 +44,7 @@ public class Enemy : MonoBehaviour
         _anim.SetTrigger("OnEnemyDeath");
         _speed = 0;
         Destroy(this.gameObject, 2.8f);
+        _audioSource.Play();
     }
     void randomPos(){
         float randomX = Random.Range(-8f, 8f);
