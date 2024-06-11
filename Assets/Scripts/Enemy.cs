@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] AudioClip _explosionSoundClip;
     [SerializeField] AudioSource _audioSource;
 
+    [SerializeField] private bool _isEnemyExplosion = false;
+
     void Start()
     {
         randomPos();
@@ -33,7 +35,7 @@ public class Enemy : MonoBehaviour
             Player player = other.transform.GetComponent<Player>();
             if (player != null) player.Damage();
         }
-        if (other.tag == "Laser"){
+        if (other.tag == "Laser" && _isEnemyExplosion == false){
             EnemyDeath();
             _player.addScore();
             Destroy(other.gameObject);
@@ -41,9 +43,11 @@ public class Enemy : MonoBehaviour
     }
     private void EnemyDeath()
     {
+        _isEnemyExplosion = true;
         _anim.SetTrigger("OnEnemyDeath");
         _speed = 0;
         Destroy(this.gameObject, 2.8f);
+        Destroy(GetComponent<Rigidbody2D>());
         _audioSource.Play();
     }
     void randomPos(){
