@@ -49,9 +49,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 001de92535120d342a857d6fde83e73b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 4
+  _speed: 6
   _explosionSoundClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _audioSource: {fileID: 9218972292937529957}
+  _isEnemyExplosion: 0
 --- !u!212 &1500770618661773443
 SpriteRenderer:
   m_ObjectHideFlags: 0

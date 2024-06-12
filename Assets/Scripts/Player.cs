@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float _speed = 3.5f;
+    [SerializeField] private float _speed = 7f;
 
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
@@ -20,7 +21,7 @@ public class Player : MonoBehaviour
     private bool _isSpeedActive = false;
     private bool _isShieldActive = false;
 
-    [SerializeField] private float _speedMultiplier = 2;
+    [SerializeField] private float _speedMultiplier = 1.5f;
     [SerializeField] private GameObject _shield;
 
     [SerializeField] private GameObject _leftEngineFire, _rightEngineFire;
@@ -128,6 +129,7 @@ public class Player : MonoBehaviour
     {
         _isSpeedActive = true;
         _speed *= _speedMultiplier;
+        _fireRate = 0.2f;
         StartCoroutine(SpeedPowerDownRoutine());
     }
     IEnumerator SpeedPowerDownRoutine()
@@ -135,6 +137,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5.0f);
         _isSpeedActive = false;
         _speed /= _speedMultiplier;
+        _fireRate = 0.5f;
     }
     
     public void ShieldActive()
