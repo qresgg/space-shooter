@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
 
-    private bool _isTripleShotActive = false;
+    [SerializeField] private bool _isTripleShotActive = false;
     private bool _isSpeedActive = false;
     private bool _isShieldActive = false;
 
@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     private int _score = 0;
     [SerializeField] AudioClip _laserSoundClip;
     [SerializeField] AudioSource _audioSource;
+    private Laser _laser;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +37,7 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
+        _laser = _laserPrefab.GetComponent<Laser>();
     }
 
     // Update is called once per frame
@@ -71,9 +73,6 @@ public class Player : MonoBehaviour
     void ShootLaser()
     {
         _nextFire = Time.time + _fireRate;
-        Vector3 direction = new Vector3(transform.position.x, transform.position.y + 0.8f, 0);
-        // transform.position + new Vector3(0, 0.8f, 0)
-        
         if (_isTripleShotActive)
         {
             Vector3 TripleShotActive = new Vector3(transform.position.x, transform.position.y + 0.2f, 0);
@@ -81,10 +80,11 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Vector3 TripleShotActiveDeactivate = new Vector3(transform.position.x, transform.position.y + 0.8f, 0);
+            Vector3 TripleShotActiveDeactivate = new Vector3(transform.position.x, transform.position.y + 1.2f, 0);
             Instantiate(_laserPrefab, TripleShotActiveDeactivate, Quaternion.identity);
         }
         _audioSource.Play();
+        _laser.PlayerLaserAssigner();
     }
     
     public void Damage()

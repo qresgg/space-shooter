@@ -22,6 +22,7 @@ public class Asteroid : MonoBehaviour
         if (other.tag == "Laser"){
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject, 0.25f);
+            Destroy(GetComponent<Collider2D>());
             _spawnManager.StartSpawning();
             Destroy(other.gameObject);
         }

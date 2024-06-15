@@ -11,8 +11,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject[] powerups; // list of powerups
     private bool _isPlayerDeath = false;
-    private float timer = 0;
-    private float _spawnInterval = 6f;
 
     public void StartSpawning()
     {
